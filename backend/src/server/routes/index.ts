@@ -1,6 +1,11 @@
 import { Router } from "express";
 
-import { UsersController, LoginController } from "../controllers";
+import {
+    UsersController,
+    LoginController,
+    IngredientsController
+} from "../controllers";
+
 import { signUp } from "../controllers/login/SignUp";
 import { signIn } from "../controllers/login/SignIn";
 import { ensureAuthenticated } from "../middlewares/EnsureAuthenticated";
@@ -20,5 +25,16 @@ routes.route("/users/:uuid")
     .get(UsersController.getByUuidValidation, UsersController.getByUuid);
 // .put(UsersController.putValidation, UsersController.put)
 // .delete(UsersController.deleteValidation, UsersController.del);
+
+routes.route("/ingredients")
+    .all(ensureAuthenticated)
+    .post(IngredientsController.postValidation, IngredientsController.post)
+    .get(IngredientsController.getAllValidation, IngredientsController.getAll);
+
+routes.route("/ingredients/:uuid")
+    .all(ensureAuthenticated)
+    .get(IngredientsController.getByUuidValidation, IngredientsController.getByUuid)
+    .put(IngredientsController.updateValueValidation, IngredientsController.updateValue)
+    .delete(IngredientsController.deleteValidation, IngredientsController.del);
 
 export { routes };

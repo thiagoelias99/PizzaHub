@@ -1,7 +1,9 @@
-interface IIngredient {
+export interface IIngredient {
     uuid: string,
     description: string,
     unit: string,
-    valuePerUnit: number,
-    deleted: boolean
+    valuePerUnit: number
+    createdAt: string;
+    updatedAt: string;
+    deleted: boolean;
 }
