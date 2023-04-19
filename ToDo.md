@@ -1,5 +1,0 @@
-ingredients
-
-
-controllers
-routes

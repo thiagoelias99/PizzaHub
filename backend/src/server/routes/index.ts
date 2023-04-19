@@ -17,14 +17,11 @@ routes.post("/signin", LoginController.signInValidation, signIn);
 
 routes.route("/users")
     .all(ensureAuthenticated)
-    // .post(UsersController.postValidation, UsersController.post)
     .get(UsersController.getAllValidation, UsersController.getAll);
 
 routes.route("/users/:uuid")
     .all(ensureAuthenticated)
     .get(UsersController.getByUuidValidation, UsersController.getByUuid);
-// .put(UsersController.putValidation, UsersController.put)
-// .delete(UsersController.deleteValidation, UsersController.del);
 
 routes.route("/ingredients")
     .all(ensureAuthenticated)
