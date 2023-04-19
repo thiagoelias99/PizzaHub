@@ -44,6 +44,22 @@ export const selectByUuid = async (uuid: string): Promise<IUser | Error> => {
     }
 };
 
+export const selectByEmail = async (email: string): Promise<IUser | Error> => {
+    try {
+        const result = await Knex(ETableNames.users)
+            .select("*")
+            .where("email", "=", email)
+            .first();
+
+        if (result) return result;
+
+        return new Error("Record not found");
+    } catch (error) {
+        console.log(error);
+        return new Error("Error while registering the record");
+    }
+};
+
 export const totalCount = async (filter = ""): Promise<number | Error> => {
     try {
         const [{ count }] = await Knex(ETableNames.users)

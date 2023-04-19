@@ -19,3 +19,19 @@ export const update = async (uuid: string, user: Omit<IUser, "uuid" | "signupDat
         return new Error("Error while registering the record");
     }
 };
+
+export const updateUserLogin = async (uuid: string): Promise<void | Error> => {
+    try {
+        const result = await Knex(ETableNames.users)
+            .update({
+                lastLogin: new Date().toISOString()
+            })
+            .where("uuid", "=", uuid);
+        if (result > 0) return;
+
+        return new Error("Record not found");
+    } catch (error) {
+        console.log(error);
+        return new Error("Error while registering the record");
+    }
+};
