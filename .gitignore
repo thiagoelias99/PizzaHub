@@ -584,3 +584,4 @@ $RECYCLE.BIN/
 
 *.sqlite
 package-lock.json
+/backend/build
