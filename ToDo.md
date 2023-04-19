@@ -1,3 +1,1 @@
-add controller
-add routes
-add server
+terminar controllers

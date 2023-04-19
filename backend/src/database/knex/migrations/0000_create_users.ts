@@ -6,7 +6,7 @@ export async function up(knex: Knex) {
     return knex
         .schema
         .createTable(ETableNames.users, table => {
-            table.uuid("uuid").primary().index();
+            table.uuid("uuid").primary().index().notNullable();
             table.string("name").index().notNullable();
             table.string("password").notNullable();
             table.string("email").notNullable().unique();
