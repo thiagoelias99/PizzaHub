@@ -2,9 +2,10 @@ import { Box, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRo
 import React, { useEffect, useState } from "react";
 import { IIngredient } from "../../models/IIngredient";
 import { Api } from "../../config/api";
+import { useNavigate } from "react-router-dom";
 
 import DeleteIcon from "@mui/icons-material/Delete";
-import { error } from "console";
+import { OpenInNew } from "@mui/icons-material";
 
 
 const data: IIngredient[] = [
@@ -36,6 +37,7 @@ const data: IIngredient[] = [
 
 export const IngredientsList: React.FC = () => {
     const route = "ingredients";
+    const navigate = useNavigate();
 
     const [tableData, setTableData] = useState<IIngredient[] | null>(null);
 
@@ -57,6 +59,11 @@ export const IngredientsList: React.FC = () => {
             .then(response => alert(response.status))
             .then(fetchData)
             .catch(error => console.log);
+    }
+
+    function handleOpen(ingredient: IIngredient): void {
+        console.log(navigate);
+        navigate(ingredient.uuid, { state: ingredient});
     }
 
     return (
@@ -81,13 +88,20 @@ export const IngredientsList: React.FC = () => {
                 </TableHead>
                 <TableBody>
                     {tableData && tableData.map((row) => (
-                        <TableRow key={row.uuid}>
+                        <TableRow
+                            key={row.uuid}>
                             <TableCell>
                                 <IconButton
                                     aria-label="delete"
                                     onClick={e => handleDelete(row.uuid)}
                                 >
                                     <DeleteIcon />
+                                </IconButton>
+                                <IconButton
+                                    aria-label="delete"
+                                    onClick={e => handleOpen(row)}
+                                >
+                                    <OpenInNew />
                                 </IconButton>
                             </TableCell>
                             <TableCell>{row.description}</TableCell>

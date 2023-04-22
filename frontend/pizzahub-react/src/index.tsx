@@ -9,6 +9,7 @@ import { DetailsToolbar } from "./toolbars/DetailsToolbar";
 import { IngredientDetails } from "./pages/Ingredients/IngredientDetails";
 import Sidebar from "./components/Sidebar";
 import { IngredientsList } from "./pages/Ingredients/IngredientList";
+import { AppRoutes } from "./routes/AppRoutes";
 
 const darkTheme = createTheme({
     palette: {
@@ -17,16 +18,13 @@ const darkTheme = createTheme({
 });
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+    document.getElementById("root") as HTMLElement
 );
 root.render(
     <React.StrictMode>
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-            <Sidebar>
-                <IngredientsList />
-                {/* <IngredientDetails /> */}
-            </Sidebar>
+            <AppRoutes />
         </ThemeProvider>
     </React.StrictMode>
 );
