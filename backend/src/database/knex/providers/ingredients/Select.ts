@@ -8,6 +8,7 @@ export const selectAll = async (page: number, limit: number, filter: string, uui
             .select("*")
             .where("uuid", uuid)
             .orWhere("description", "like", `%${filter}%`)
+            .andWhere("deleted", 0)
             .offset((page - 1) * limit)
             .limit(limit);
 
