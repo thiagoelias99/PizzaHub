@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { Playground } from "./pages/playground";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { DetailsToolbar } from "./toolbars/DetailsToolbar";
+import { DetailsToolbar } from "./components/Toolbars/DetailsToolbar";
 import { IngredientDetails } from "./pages/Ingredients/IngredientDetails";
 import Sidebar from "./components/Sidebar";
 import { IngredientsList } from "./pages/Ingredients/IngredientList";

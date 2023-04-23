@@ -1,8 +1,9 @@
 import { Box, Button, Drawer, Paper, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 interface IProps {
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 const Sidebar: React.FC<IProps> = ({ children }) => {
@@ -42,7 +43,7 @@ const Sidebar: React.FC<IProps> = ({ children }) => {
                 height='100%'
                 marginLeft={theme.spacing(openSidebar ? 28 : 8)}
             >
-                {children}
+                <Outlet />
             </Box>
         </>
     );

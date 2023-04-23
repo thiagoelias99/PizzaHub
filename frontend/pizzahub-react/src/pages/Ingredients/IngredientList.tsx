@@ -6,113 +6,100 @@ import { useNavigate } from "react-router-dom";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { OpenInNew } from "@mui/icons-material";
-
-
-const data: IIngredient[] = [
-    {
-        uuid: "abcd",
-        description: "Tomate",
-        unit: "unidade",
-        valuePerUnit: 12.99
-    },
-    {
-        uuid: "abc3",
-        description: "Tomate 4",
-        unit: "unidade",
-        valuePerUnit: 12.99
-    },
-    {
-        uuid: "abc7",
-        description: "Tomate 3",
-        unit: "unidade",
-        valuePerUnit: 12.99
-    },
-    {
-        uuid: "abcdhjdsf",
-        description: "Tomate 2",
-        unit: "unidade",
-        valuePerUnit: 12.99
-    }
-];
+import { ListToolbar } from "../../components/Toolbars/ListToolbar";
 
 export const IngredientsList: React.FC = () => {
     const route = "ingredients";
     const navigate = useNavigate();
 
     const [tableData, setTableData] = useState<IIngredient[] | null>(null);
+    const [searchValue, setSearchValue] = useState("");
 
-    function fetchData(): void {
-        Api.get<IIngredient[]>(route)
+    function fetchData(filter = "", page = 1, limit = 10, uuid = ""): void {
+        const query = `${route}/?filter=${filter}&limit=${limit}&page=${page}&uuid=${uuid}`;
+
+        Api.get<IIngredient[]>(query)
             .then((response) => {
                 setTableData(response.data);
             })
             .catch(error => console.log);
     }
 
-
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData(searchValue);
+    }, [searchValue]);
 
     function handleDelete(uuid: string): void {
         Api.delete(`${route}/${uuid}`)
             .then(response => alert(response.status))
-            .then(fetchData)
+            .then(response => fetchData())
             .catch(error => console.log);
     }
 
     function handleOpen(ingredient: IIngredient): void {
-        console.log(navigate);
-        navigate(ingredient.uuid, { state: ingredient});
+        navigate(ingredient.uuid, { state: ingredient });
+    }
+
+    function handleNew(): void {
+        navigate("new");
+    }
+
+    function handleSearch(value: string): void {
+        setSearchValue(value);
     }
 
     return (
-        <Box
-            component={Paper}
-            display='flex'
-            flexDirection="column"
-            alignItems='center'
-            gap={1}
-            marginX={1}
-            marginY={1}
-            padding={1}
-        >
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Descrição</TableCell>
-                        <TableCell>Unidade</TableCell>
-                        <TableCell>Valor por Unidade</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {tableData && tableData.map((row) => (
-                        <TableRow
-                            key={row.uuid}>
-                            <TableCell>
-                                <IconButton
-                                    aria-label="delete"
-                                    onClick={e => handleDelete(row.uuid)}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                                <IconButton
-                                    aria-label="delete"
-                                    onClick={e => handleOpen(row)}
-                                >
-                                    <OpenInNew />
-                                </IconButton>
-                            </TableCell>
-                            <TableCell>{row.description}</TableCell>
-                            <TableCell>{row.unit}</TableCell>
-                            <TableCell>{row.valuePerUnit}</TableCell>
+        <>
+            <ListToolbar
+                newButton={handleNew}
+                searchValue={searchValue}
+                searchValueFeedback={handleSearch}
+            />
+            <Box
+                component={Paper}
+                display='flex'
+                flexDirection="column"
+                alignItems='center'
+                gap={1}
+                marginX={1}
+                marginY={1}
+                padding={1}
+            >
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Descrição</TableCell>
+                            <TableCell>Unidade</TableCell>
+                            <TableCell>Valor por Unidade</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-
-
-        </Box>
+                    </TableHead>
+                    <TableBody>
+                        {tableData && tableData.map((row) => (
+                            <TableRow
+                                key={row.uuid}>
+                                <TableCell>
+                                    <IconButton
+                                        aria-label="delete"
+                                        onClick={e => handleDelete(row.uuid)}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        aria-label="delete"
+                                        onClick={e => handleOpen(row)}
+                                    >
+                                        <OpenInNew />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell>{row.description}</TableCell>
+                                <TableCell>{row.unit}</TableCell>
+                                <TableCell>{row.valuePerUnit}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Box>
+        </>
     );
 };

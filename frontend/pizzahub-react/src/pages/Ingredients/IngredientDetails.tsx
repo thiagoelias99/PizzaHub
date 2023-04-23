@@ -1,6 +1,6 @@
 import { Box, Paper, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { DetailsToolbar } from "../../toolbars/DetailsToolbar";
+import { DetailsToolbar } from "../../components/Toolbars/DetailsToolbar";
 
 import { Api } from "../../config/api";
 import { useLocation, useParams } from "react-router-dom";
