@@ -1,13 +1,16 @@
 import React from "react";
 import { Box, Button, Paper } from "@mui/material";
-
-// import { Container } from './styles';
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
     newButton: () => void
+    saveButton: () => void
+    deleteButton: () => void
 }
 
-export const DetailsToolbar: React.FC<IProps> = ({newButton}) => {
+export const DetailsToolbar: React.FC<IProps> = ({ newButton, saveButton, deleteButton }) => {
+    const navigate = useNavigate();
+
     return (
         <Box
             component={Paper}
@@ -19,12 +22,13 @@ export const DetailsToolbar: React.FC<IProps> = ({newButton}) => {
             marginY={1}
             padding={1}
         >
-            <Button
+            {/*             <Button
                 variant="contained"
                 onClick={newButton}
-            >Novo</Button>
-            <Button variant="contained">Salvar</Button>
-            <Button variant="contained">Deletar</Button>
+            >Novo</Button> */}
+            <Button variant="contained" onClick={saveButton}>Salvar</Button>
+            <Button variant="contained" onClick={deleteButton}>Deletar</Button>
+            <Button variant="contained" onClick={e => navigate(-1)}>Voltar</Button>
         </Box>
     );
 };

@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import { DetailsToolbar } from "../../components/Toolbars/DetailsToolbar";
 
 import { Api } from "../../config/api";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { IIngredient } from "../../models/IIngredient";
 
 export const IngredientDetails: React.FC = () => {
     const [description, setDescription] = useState("");
     const [unit, setUnit] = useState("");
     const [value, setValue] = useState(0);
+    const navigate = useNavigate();
 
     const uuid: string | undefined = useParams().uuid;
     const route = "ingredients";
@@ -24,6 +25,22 @@ export const IngredientDetails: React.FC = () => {
         Api.post("ingredients", data)
             .then((response) => console.log(response.data));
     };
+
+    const handleNew = () => {
+        const data = {
+            description,
+            unit,
+            valuePerUnit: value
+        };
+        Api.post("ingredients", data)
+            .then((response) => console.log(response.data));
+    };
+
+    const handleDelete = () => {
+        Api.delete(`ingredients/${uuid}`)
+            .then(response => navigate("/dashboard/ingredients"));
+    };
+
 
     useEffect(() => {
 
@@ -50,7 +67,9 @@ export const IngredientDetails: React.FC = () => {
     return (
         <>
             <DetailsToolbar
-                newButton={handleSave} />
+                newButton={handleNew}
+                saveButton={handleSave}
+                deleteButton={handleDelete} />
             <Box
                 component={Paper}
                 display='flex'
