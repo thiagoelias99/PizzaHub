@@ -41,10 +41,8 @@ export const IngredientDetails: React.FC = () => {
             .then(response => navigate("/dashboard/ingredients"));
     };
 
-
     useEffect(() => {
-
-        if (uuid !== "new") {
+        if (uuid !== "new") {            
             if (ingredient) {
                 setDescription(ingredient.description);
                 setUnit(ingredient.unit);
@@ -69,7 +67,8 @@ export const IngredientDetails: React.FC = () => {
             <DetailsToolbar
                 newButton={handleNew}
                 saveButton={handleSave}
-                deleteButton={handleDelete} />
+                deleteButton={handleDelete}
+                isUpdate={uuid !== "new"} />
             <Box
                 component={Paper}
                 display='flex'

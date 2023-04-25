@@ -1,12 +1,13 @@
 import { Box, Button, Drawer, Paper, useMediaQuery, useTheme } from "@mui/material";
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 interface IProps {
     children?: React.ReactNode
 }
 
 const Sidebar: React.FC<IProps> = ({ children }) => {
+    const navigate = useNavigate();
 
     const theme = useTheme();
     const smDown = useMediaQuery(theme.breakpoints.down("sm"));
@@ -32,9 +33,8 @@ const Sidebar: React.FC<IProps> = ({ children }) => {
                     gap={1}
                     overflow="hidden"
                 >
-                    <Button
-                        onClick={toggleSidebar}>Close</Button>
-                    <Button>Ingredientes</Button>
+                    <Button onClick={toggleSidebar}>Close</Button>
+                    <Button onClick={e => navigate("/dashboard/ingredients")}>Ingredientes</Button>
                     <Button>2</Button>
                     <Button>3</Button>
                 </Box>

@@ -6,10 +6,12 @@ interface IProps {
     newButton: () => void
     saveButton: () => void
     deleteButton: () => void
+    isUpdate: boolean
 }
 
-export const DetailsToolbar: React.FC<IProps> = ({ newButton, saveButton, deleteButton }) => {
+export const DetailsToolbar: React.FC<IProps> = ({ newButton, saveButton, deleteButton, isUpdate }) => {
     const navigate = useNavigate();
+    console.log("update", isUpdate);
 
     return (
         <Box
@@ -22,12 +24,12 @@ export const DetailsToolbar: React.FC<IProps> = ({ newButton, saveButton, delete
             marginY={1}
             padding={1}
         >
-            {/*             <Button
+            {isUpdate && <Button
                 variant="contained"
                 onClick={newButton}
-            >Novo</Button> */}
+            >Novo</Button>}
             <Button variant="contained" onClick={saveButton}>Salvar</Button>
-            <Button variant="contained" onClick={deleteButton}>Deletar</Button>
+            {isUpdate && <Button variant="contained" onClick={deleteButton}>Deletar</Button>}
             <Button variant="contained" onClick={e => navigate(-1)}>Voltar</Button>
         </Box>
     );

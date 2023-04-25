@@ -1,4 +1,4 @@
-import { Box, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, debounce } from "@mui/material";
+import { Box, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IIngredient } from "../../models/IIngredient";
 import { Api } from "../../config/api";
@@ -18,9 +18,7 @@ export const IngredientsList: React.FC = () => {
     const [searchValue, setSearchValue] = useState("");
 
     function fetchData(filter = "", page = 1, limit = 10, uuid = ""): void {
-        console.log("wait");
         debounce(() => {
-            console.log("go");
             const query = `${route}/?filter=${filter}&limit=${limit}&page=${page}&uuid=${uuid}`;
 
             Api.get<IIngredient[]>(query)
