@@ -9,7 +9,7 @@ export async function up(knex: Knex) {
             table.uuid("uuid").primary().index().notNullable();
             table.string("description").index().notNullable();
             table.string("unit").notNullable();
-            table.decimal("valuePerUnit").notNullable().unique();
+            table.decimal("valuePerUnit").notNullable();
             table.date("createdAt").notNullable();
             table.date("updatedAt").notNullable();
             table.boolean("deleted").notNullable();
