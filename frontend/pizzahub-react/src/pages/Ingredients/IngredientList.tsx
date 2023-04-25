@@ -1,8 +1,9 @@
-import { Box, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Box, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow, debounce } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { IIngredient } from "../../models/IIngredient";
 import { Api } from "../../config/api";
 import { useNavigate } from "react-router-dom";
+import { useDebounce } from "../../hooks/useDebounce";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { OpenInNew } from "@mui/icons-material";
@@ -11,18 +12,23 @@ import { ListToolbar } from "../../components/Toolbars/ListToolbar";
 export const IngredientsList: React.FC = () => {
     const route = "ingredients";
     const navigate = useNavigate();
+    const { debounce } = useDebounce();
 
     const [tableData, setTableData] = useState<IIngredient[] | null>(null);
     const [searchValue, setSearchValue] = useState("");
 
     function fetchData(filter = "", page = 1, limit = 10, uuid = ""): void {
-        const query = `${route}/?filter=${filter}&limit=${limit}&page=${page}&uuid=${uuid}`;
+        console.log("wait");
+        debounce(() => {
+            console.log("go");
+            const query = `${route}/?filter=${filter}&limit=${limit}&page=${page}&uuid=${uuid}`;
 
-        Api.get<IIngredient[]>(query)
-            .then((response) => {
-                setTableData(response.data);
-            })
-            .catch(error => console.log);
+            Api.get<IIngredient[]>(query)
+                .then((response) => {
+                    setTableData(response.data);
+                })
+                .catch(error => console.log);
+        });
     }
 
     useEffect(() => {
