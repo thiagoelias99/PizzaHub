@@ -3,15 +3,13 @@ import { Box, Button, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
-    newButton: () => void
     saveButton: () => void
     deleteButton: () => void
     isUpdate: boolean
 }
 
-export const DetailsToolbar: React.FC<IProps> = ({ newButton, saveButton, deleteButton, isUpdate }) => {
+export const DetailsToolbar: React.FC<IProps> = ({ saveButton, deleteButton, isUpdate }) => {
     const navigate = useNavigate();
-    console.log("update", isUpdate);
 
     return (
         <Box
@@ -24,10 +22,6 @@ export const DetailsToolbar: React.FC<IProps> = ({ newButton, saveButton, delete
             marginY={1}
             padding={1}
         >
-            {isUpdate && <Button
-                variant="contained"
-                onClick={newButton}
-            >Novo</Button>}
             <Button variant="contained" onClick={saveButton}>Salvar</Button>
             {isUpdate && <Button variant="contained" onClick={deleteButton}>Deletar</Button>}
             <Button variant="contained" onClick={e => navigate(-1)}>Voltar</Button>
